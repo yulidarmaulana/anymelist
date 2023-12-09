@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Outlet, Link } from "react-router-dom";
 
 const Manga = () => {
   const [animeData, setAnimeData] = useState([]);
@@ -22,6 +23,7 @@ const Manga = () => {
       <div className="grid grid-cols-4 gap-4 mb-4">
 
       {animeData.map((anime) => (
+        <Link key={anime.mal_id} to={`/Detail/${anime.mal_id}`}>
         <div key={anime.mal_id} className="mt-8 text-slate-950 border-black border-4 hover:shadow-[8px_8px_0px_rgba(0,0,0,1)] bg-[#F2F7F5]">
           <a href="" className="block cursor-pointer">
             <article className="w-full h-full">
@@ -38,13 +40,14 @@ const Manga = () => {
                 <p className="text-xs mb-4 line-clamp-4">
                   {anime.rating}
                 </p>
-                <strong>Read More</strong>
+                {/* <strong>Read More</strong> */}
               </div>
             </article>
           </a>
         </div>
+        </Link>
       ))}
-
+      <Outlet />
       </div>
       
     </>
