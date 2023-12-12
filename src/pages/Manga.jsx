@@ -3,16 +3,31 @@ import { Outlet, Link } from "react-router-dom";
 
 const Manga = () => {
   const [animeData, setAnimeData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   const getData = async () => {
-    const res = await fetch("https://api.jikan.moe/v4/top/manga");
+    const res = await fetch(`https://api.jikan.moe/v4/manga?page=${currentPage}`);
     const data = await res.json();
     setAnimeData(data.data);
+    setTotalPages(data.pagination.last_visible_page);
   };
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [currentPage]);
+
+  const handlePrevClick = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextClick = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
 
   return (
     <>
@@ -20,7 +35,7 @@ const Manga = () => {
         Popular
       </h1> */}
 
-      <div className="grid grid-cols-4 gap-4 mb-4">
+      <div className="grid grid-cols-5 gap-4 mb-4">
 
       {animeData.map((anime) => (
         <Link key={anime.mal_id} to={`/Detail/${anime.mal_id}`}>
@@ -50,6 +65,29 @@ const Manga = () => {
       <Outlet />
       </div>
       
+      <div className="flex justify-center items-baseline space-x-4 p-4 border-black border-2 bg-[#FFBDC4] shadow-[4px_4px_0px_rgba(0,0,0,1)]">
+      {/* <p className="text-slate-950">{currentPage - 1}</p> */}
+      <button
+          className="h-12 border-black border-2 p-2.5 bg-[#A6FAFF] text-slate-950 hover:bg-[#79F7FF] hover:shadow-[4px_4px_0px_rgba(0,0,0,2)] active:bg-[#00E1EF]"
+          onClick={handlePrevClick}
+          disabled={currentPage === 1}
+        >
+          Prev 
+        </button>
+
+        <p className="text-slate-950">{currentPage}</p>
+
+        <button
+          className="h-12 border-black border-2 p-2.5 bg-[#A6FAFF] text-slate-950 hover:bg-[#79F7FF] hover:shadow-[4px_4px_0px_rgba(0,0,0,2)] active:bg-[#00E1EF]"
+          onClick={handleNextClick}
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </button>
+
+        {/* <p className="text-slate-950">{currentPage + 1}</p> */}
+
+      </div>
     </>
   );
   };
