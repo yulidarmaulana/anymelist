@@ -35,7 +35,7 @@ const Home = () => {
               </figure>
               <div className="px-6 py-5 text-left h-full">
                 {/* <p className="text-base mb-4">May 15th, 2023</p> */}
-                <h1 className="text-xl mb-4"> {anime.title} </h1>
+                <h1 className="text-xl mb-4 truncate"> {anime.title} </h1>
                 <p className="text-xs mb-4 line-clamp-4">
                   {anime.rating}
                 </p>

@@ -23,7 +23,7 @@ const Detail = () => {
   
     return (
       <>
-       <button className="h-12 border-black border-2 p-2 mt-4 flex justify-start bg-[#A6FAFF] text-slate-950 hover:bg-[#79F7FF] hover:shadow-[4px_4px_0px_rgba(0,0,0,2)] active:bg-[#00E1EF]">
+       <button className="h-12 border-black border-2 p-2 mt-4 flex justify-start bg-yellow-200 hover:bg-yellow-300 text-slate-950 hover:shadow-[4px_4px_0px_rgba(0,0,0,2)] active:bg-yellow-400">
             <Link to="/Manga">back</Link>
         </button>
 
@@ -41,7 +41,7 @@ const Detail = () => {
                 <p className="text-base mb-4">{detailManga.release_date}</p>
                 <h1 className="text-[32px] mb-4">{detailManga.title}</h1>
                 <p className="text-xs mb-4 line-clamp-4">{detailManga.synopsis}</p>
-                <p>Status : <strong>{detailManga.genres[1].name}</strong></p> 
+                <p>Genre : <strong>{detailManga.genres[1].name}</strong></p> 
               </div>
             </article>
           </div>

@@ -5,17 +5,36 @@ const Manga = () => {
   const [animeData, setAnimeData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTimeout, setSearchTimeout] = useState(null);
 
   const getData = async () => {
-    const res = await fetch(`https://api.jikan.moe/v4/manga?page=${currentPage}`);
+    const res = await fetch(`https://api.jikan.moe/v4/manga?page=${currentPage}&q=${searchTerm}`);
     const data = await res.json();
     setAnimeData(data.data);
     setTotalPages(data.pagination.last_visible_page);
   };
 
   useEffect(() => {
-    getData();
-  }, [currentPage]);
+    if (searchTimeout) {
+      clearTimeout(searchTimeout); // Hapus timeout sebelumnya jika ada
+    }
+
+     // Tetapkan timeout baru untuk memicu pencarian setelah beberapa detik
+     const timeoutId = setTimeout(() => {
+      getData();
+    }, 500); // Ganti angka 1000 dengan jumlah milidetik yang diinginkan
+
+    setSearchTimeout(timeoutId);
+
+    // Bersihkan timeout saat komponen tidak lagi ter-render
+    return () => {
+      if (searchTimeout) {
+        clearTimeout(searchTimeout);
+      }
+    };
+
+  }, [currentPage, searchTerm]);
 
   const handlePrevClick = () => {
     if (currentPage > 1) {
@@ -29,11 +48,22 @@ const Manga = () => {
     }
   };
 
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleSearchSubmit = (event) => {
+    event.preventDefault();
+    setCurrentPage(1); // Reset current page when performing a new search
+  };
+
   return (
     <>
-      {/* <h1 className="text-2xl mb-4 font-public-sans font-semibold text-slate-950">
-        Popular
-      </h1> */}
+
+      <div className="flex justify-end">
+
+      <input className="w-72 mt-4  items-baseline border-black border-2 p-2.5 text-slate-950  bg-[#A6FAFF] focus:outline-none focus:shadow-[2px_2px_0px_rgba(0,0,0,1)] focus:bg-[#FFA6F6] active:shadow-[2px_2px_0px_rgba(0,0,0,1)]" onSubmit={handleSearchSubmit}  placeholder="Search Manga" value={searchTerm} onChange={handleSearch} /> 
+      </div>
 
       <div className="grid grid-cols-5 gap-4 mb-4">
 
@@ -51,7 +81,7 @@ const Manga = () => {
               </figure>
               <div className="px-6 py-5 text-left h-full">
                 {/* <p className="text-base mb-4">May 15th, 2023</p> */}
-                <h1 className="text-xl mb-4"> {anime.title} </h1>
+                <h1 className="text-xl mb-4 truncate"> {anime.title} </h1>
                 <p className="text-xs mb-4 line-clamp-4">
                   {anime.rating}
                 </p>
@@ -75,7 +105,7 @@ const Manga = () => {
           Prev 
         </button>
 
-        <p className="text-slate-950">{currentPage}</p>
+        <p className="text-slate-950">{currentPage} / {totalPages}</p>
 
         <button
           className="h-12 border-black border-2 p-2.5 bg-[#A6FAFF] text-slate-950 hover:bg-[#79F7FF] hover:shadow-[4px_4px_0px_rgba(0,0,0,2)] active:bg-[#00E1EF]"
