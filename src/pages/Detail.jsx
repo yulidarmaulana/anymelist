@@ -3,51 +3,103 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const Detail = () => {
+  const [detailManga, setdetailManga] = useState({});
+  const [recommendations, setRecommendations] = useState([]);
+  const animeId = useParams().mal_id;
 
-    const [detailManga, setdetailManga] = useState({});
-    const animeId = useParams().mal_id;
-  
-    const getData = async () => {
-      try {
-        const res = await fetch(`https://api.jikan.moe/v4/manga/${animeId}`);
-        const data = await res.json();
-        setdetailManga(data.data);
-      } catch (error) {
-        console.error("Error fetching manga details:", error);
-      }
-    };
-  
-    useEffect(() => {
-      getData();
-    }); 
-  
-    return (
-      <>
-       <button className="h-12 border-black border-2 p-2 mt-4 flex justify-start bg-yellow-200 hover:bg-yellow-300 text-slate-950 hover:shadow-[4px_4px_0px_rgba(0,0,0,2)] active:bg-yellow-400">
-            <Link to="/Manga">back</Link>
-        </button>
+  const getData = async () => {
+    try {
+      const res = await fetch(`https://api.jikan.moe/v4/manga/${animeId}`);
+      const data = await res.json();
+      setdetailManga(data.data);
 
-        {Object.keys(detailManga).length > 0 && (
-          <div className="w-full mt-8 h-fit text-slate-950 border-black border-2 hover:shadow-[8px_8px_0px_rgba(0,0,0,1)] bg-[#F2F7F5]">
-            <article className="w-full h-full">
-              <figure className="w-full h-1/2 border-black border-b-2">
+      // Ambil rekomendasi manga
+      const recommendationsRes = await fetch(`https://api.jikan.moe/v4/manga/${animeId}/recommendations`);
+      const recommendationsData = await recommendationsRes.json();
+      setRecommendations(recommendationsData.data);
+
+    } catch (error) {
+      console.error("Error fetching manga details:", error);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  });
+
+  return (
+    <>
+      <button className="h-12 border-black border-2 p-2 mt-4 flex justify-start bg-yellow-200 hover:bg-yellow-300 text-slate-950 hover:shadow-[4px_4px_0px_rgba(0,0,0,2)] active:bg-yellow-400">
+        <Link to="/Manga">back</Link>
+      </button>
+
+      {Object.keys(detailManga).length > 0 && (
+        <div className="w-full mt-8 text-slate-950 border-black border-2 shadow-[8px_8px_0px_rgba(0,0,0,1)] bg-[#F2F7F5]">
+          <article className="w-full h-full flex">
+            <img
+              src={detailManga.images.jpg.image_url}
+              alt={detailManga.title}
+              className="h-72 object-contain border-black border-2"
+            />
+            <div className="px-6 py-5 text-left h-full">
+              <p className="text-base mb-4">{detailManga.release_date}</p>
+              <h1 className="text-[32px]">{detailManga.title}</h1>
+              <p className="text-xs">
+                Author : <strong>{detailManga.authors[0].name}</strong>
+              </p>
+              <p className="text-xs mb-6">
+                Date : <strong>{detailManga.published.string}</strong>
+              </p>
+              <p className="text-xs mb-4 line-clamp-4">
+                {detailManga.synopsis}
+              </p>
+              <div className="flex gap-4">
+                <p>
+                  Volumes : <strong>{detailManga.volumes}</strong>
+                </p>
+                <p>
+                  Genre : <strong>{detailManga.genres[1].name}</strong>
+                </p>
+                <p>
+                  Status : <strong>{detailManga.status}</strong>
+                </p>
+                <p>
+                  Score : <strong>{detailManga.score}</strong>
+                </p>
+              </div>
+            </div>
+          </article>
+        </div>
+      )}
+
+      
+      <p className="text-2xl mt-6 font-public-sans font-semibold text-slate-950">Rekomendasi</p>
+      <div className="grid grid-cols-6 gap-4 mb-4">
+
+      {recommendations.map(recommendation => (        
+          <div key={recommendation.entry.mal_id}
+          className="mt-8 text-slate-950 border-black border-4 hover:shadow-[8px_8px_0px_rgba(0,0,0,1)] bg-[#F2F7F5]"
+        >
+          <Link key={recommendation.entry.mal_id} to={`/Detail/${recommendation.entry.mal_id}`}>
+          <article className="w-full h-full">
+              <figure className="w-full border-black border-b-2">
                 <img
-                  src={detailManga.images.jpg.image_url}
-                  alt={detailManga.title}
-                  className="w-full h-64 object-contain"
+                 src={recommendation.entry.images.jpg.image_url}
+                 alt={recommendation.entry.title}
+                  className="object-fill h-64 w-full"
                 />
               </figure>
               <div className="px-6 py-5 text-left h-full">
-                <p className="text-base mb-4">{detailManga.release_date}</p>
-                <h1 className="text-[32px] mb-4">{detailManga.title}</h1>
-                <p className="text-xs mb-4 line-clamp-4">{detailManga.synopsis}</p>
-                <p>Genre : <strong>{detailManga.genres[1].name}</strong></p> 
+                <h1 className="text-xl mb-4 truncate"> {recommendation.entry.title} </h1>
               </div>
             </article>
-          </div>
-        )}
-      </>
-    );
+          </Link>
+
+        </div>
+      ))} 
+      </div>
+    </>
+  );
 };
 
 export default Detail;

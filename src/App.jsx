@@ -2,7 +2,7 @@ import './App.css'
 import './index.css'
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Layout from './pages/Layout'
-import Home from './pages/Home'
+import Anime from './pages/Anime'
 import Popular from './pages/Popular'
 import Manga from './pages/Manga'
 import NoPage from './pages/NoPage'
@@ -16,7 +16,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
+          <Route index element={<Anime />} />
           <Route path="Popular" element={<Popular />} />
           <Route path="Manga" element={<Manga />} />
           <Route path="*" element={<NoPage />} />
