@@ -1,8 +1,13 @@
-# React + Vite
+# Anymelist
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Anymelist is a React JS implementation project created as part of learning to develop web applications that consume external APIs. 
 
-Currently, two official plugins are available:
+## References
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [React JS Documentation](https://react.dev/) - learn about React js features and API.
+- [TailwindCSS](https://tailwindcss.com)
+- [Vite](https://vitejs.dev/)
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)

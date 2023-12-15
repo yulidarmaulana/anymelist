@@ -7,9 +7,9 @@ const Layout = () => {
 
   return (
     <>
-      <h1 className="text-6xl mb-4 font-public-sans font-semibold text-slate-950"> - Anymelist - </h1>
+      <h1 className="text-6xl mb-4 font-public-sans font-semibold text-slate-950"><Link to="/">- Anymelist -</Link>  </h1>
 
-      <div className="flex justify-between items-baseline space-x-4 p-4 border-black border-2 bg-[#FFBDC4] shadow-[4px_4px_0px_rgba(0,0,0,1)]">
+      <div className="flex justify-between sticky top-2 items-baseline space-x-4 p-4 border-black border-2 bg-[#FFBDC4] shadow-[4px_4px_0px_rgba(0,0,0,1)]">
 
       <div className="space-x-4">
       

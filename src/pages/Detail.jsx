@@ -1,20 +1,19 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 const Detail = () => {
-  const [detailManga, setdetailManga] = useState({});
+  const [detailManga, setdetailManga] = useState();
   const [recommendations, setRecommendations] = useState([]);
-  const animeId = useParams().mal_id;
+  const mangaId = useParams().mal_id;
 
   const getData = async () => {
     try {
-      const res = await fetch(`https://api.jikan.moe/v4/manga/${animeId}`);
+      const res = await fetch(`https://api.jikan.moe/v4/manga/${mangaId}`);
       const data = await res.json();
       setdetailManga(data.data);
 
       // Ambil rekomendasi manga
-      const recommendationsRes = await fetch(`https://api.jikan.moe/v4/manga/${animeId}/recommendations`);
+      const recommendationsRes = await fetch(`https://api.jikan.moe/v4/manga/${mangaId}/recommendations`);
       const recommendationsData = await recommendationsRes.json();
       setRecommendations(recommendationsData.data);
 
@@ -26,6 +25,18 @@ const Detail = () => {
   useEffect(() => {
     getData();
   });
+
+  if (!detailManga) {
+    return (
+      <>
+        <div className="px-8 py-4 mt-4 bg-white border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)] grid place-content-center">
+          <div>
+            <h1 className="text-2xl my-4 text-slate-950">Loading...</h1>
+          </div>
+        </div>
+      </>
+    ); 
+  }
 
   return (
     <>
@@ -58,7 +69,7 @@ const Detail = () => {
                   Volumes : <strong>{detailManga.volumes}</strong>
                 </p>
                 <p>
-                  Genre : <strong>{detailManga.genres[1].name}</strong>
+                  Genre : <strong>{detailManga.genres[0].name}</strong>
                 </p>
                 <p>
                   Status : <strong>{detailManga.status}</strong>
@@ -73,8 +84,9 @@ const Detail = () => {
       )}
 
       
-      <p className="text-2xl mt-6 font-public-sans font-semibold text-slate-950">Rekomendasi</p>
-      <div className="grid grid-cols-6 gap-4 mb-4">
+      <p className="text-2xl mt-6 font-public-sans font-semibold text-slate-950">Recommendation</p>
+      
+      <div className="grid xs:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 grid-cols-1 gap-4 mb-4">
 
       {recommendations.map(recommendation => (        
           <div key={recommendation.entry.mal_id}
@@ -98,6 +110,7 @@ const Detail = () => {
         </div>
       ))} 
       </div>
+
     </>
   );
 };

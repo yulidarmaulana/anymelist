@@ -3,10 +3,11 @@ import { Outlet, Link } from "react-router-dom";
 // import classNames from "classnames";
 
 
+
 const Manga = () => {
   // const [open, setOpen] = useState(false);
 
-  const [mangaData, setAnimeData] = useState([]);
+  const [mangaData, setAnimeData] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
@@ -42,7 +43,7 @@ const Manga = () => {
      // Tetapkan timeout baru untuk memicu pencarian setelah beberapa detik
      const timeoutId = setTimeout(() => {
       getData();
-    }, 500); // Ganti angka 1000 dengan jumlah milidetik yang diinginkan
+    }, 1000); // Ganti angka 1000 dengan jumlah milidetik yang diinginkan
 
     setSearchTimeout(timeoutId);
 
@@ -55,13 +56,27 @@ const Manga = () => {
 
   }, [currentPage, searchTerm]);
 
+  const handleFirstClick = () => {
+    setAnimeData(null);
+    setCurrentPage(1);
+  }
+
+  const handleLastClick = () => {
+    setAnimeData(null);
+    setCurrentPage(totalPages);
+  }
+
   const handlePrevClick = () => {
+    setAnimeData(null);
+
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
     }
   };
 
   const handleNextClick = () => {
+    setAnimeData(null);
+
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
     }
@@ -76,15 +91,22 @@ const Manga = () => {
     setCurrentPage(1); // Reset current page when performing a new search
   };
 
-  // const handleFilterChange = (newFilter) => {
-  //   setFilter(newFilter);
-  // };
+  if (!mangaData) {
+    return (
+      <>
+        <div className="px-8 py-4 mt-4 bg-white border-2 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)] grid place-content-center">
+          <div>
+            <h1 className="text-2xl my-4 text-slate-950 animate-bounce">Loading</h1>
+          </div>
+        </div>
+      </>
+    ); 
+  }
   
 
   return (
     <>
-      <div className="flex justify-end">
-
+      <div className="flex justify-end gap-2 sticky top-24">
         {/* <div className="relative inline-block text-left mt-4 mx-2">
           <div>
             <button
@@ -141,7 +163,7 @@ const Manga = () => {
         </div> */}
 
         <input
-          className="w-72 mt-4 items-baseline border-black border-2 p-2.5 text-slate-950  bg-[#A6FAFF] focus:outline-none focus:shadow-[2px_2px_0px_rgba(0,0,0,1)] focus:bg-[#FFA6F6] active:shadow-[2px_2px_0px_rgba(0,0,0,1)]"
+          className="w-28 xs:w-72 md:w-72 lg:w-72 xl:w-72 items-baseline flex absolute bottom-4 mx-4 border-black border-2 p-2.5 text-slate-950  bg-[#A6FAFF] focus:outline-none focus:shadow-[2px_2px_0px_rgba(0,0,0,1)] focus:bg-[#FFA6F6] active:shadow-[2px_2px_0px_rgba(0,0,0,1)]"
           onSubmit={handleSearchSubmit}
           placeholder="Search Manga"
           value={searchTerm}
@@ -149,7 +171,7 @@ const Manga = () => {
         />
       </div>
 
-      <div className="grid grid-cols-5 gap-4 mb-4">
+      <div className="grid xs:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 grid-cols-1 gap-4 mb-4">
         {mangaData.map((manga) => (
           <Link key={manga.mal_id} to={`/Detail/${manga.mal_id}`}>
             <div
@@ -178,27 +200,55 @@ const Manga = () => {
         <Outlet />
       </div>
 
+     
+
       <div className="flex justify-center items-baseline space-x-4 p-4 border-black border-2 bg-[#FFBDC4] shadow-[4px_4px_0px_rgba(0,0,0,1)]">
+
+      <button
+          className={`h-12 border-black border-2 p-2.5 bg-[#A6FAFF] text-slate-950 hover:bg-[#79F7FF] hover:shadow-[4px_4px_0px_rgba(0,0,0,2)] active:bg-[#00E1EF] ${
+            currentPage === 1 ? "hidden" : ""
+          }`}
+          onClick={handleFirstClick}
+          disabled={currentPage === 1}
+        >
+          First
+      </button>
+      
         <button
-          className="h-12 border-black border-2 p-2.5 bg-[#A6FAFF] text-slate-950 hover:bg-[#79F7FF] hover:shadow-[4px_4px_0px_rgba(0,0,0,2)] active:bg-[#00E1EF]"
+          className={`h-12 border-black border-2 p-2.5 bg-[#A6FAFF] text-slate-950 hover:bg-[#79F7FF] hover:shadow-[4px_4px_0px_rgba(0,0,0,2)] active:bg-[#00E1EF] ${
+            currentPage === 1 ? "hidden" : ""
+          }`}
           onClick={handlePrevClick}
           disabled={currentPage === 1}
         >
           Prev
         </button>
 
-        <p className="text-slate-950">
-          {currentPage} / {totalPages}
-        </p>
+        <p className="text-slate-950">Page {currentPage} | {totalPages}</p>
 
         <button
-          className="h-12 border-black border-2 p-2.5 bg-[#A6FAFF] text-slate-950 hover:bg-[#79F7FF] hover:shadow-[4px_4px_0px_rgba(0,0,0,2)] active:bg-[#00E1EF]"
+          className={`h-12 border-black border-2 p-2.5 bg-[#A6FAFF] text-slate-950 hover:bg-[#79F7FF] hover:shadow-[4px_4px_0px_rgba(0,0,0,2)] active:bg-[#00E1EF] ${
+            currentPage === totalPages ? "hidden" : ""
+          }`}
           onClick={handleNextClick}
           disabled={currentPage === totalPages}
         >
           Next
         </button>
+
+        <button
+          className={`h-12 border-black border-2 p-2.5 bg-[#A6FAFF] text-slate-950 hover:bg-[#79F7FF] hover:shadow-[4px_4px_0px_rgba(0,0,0,2)] active:bg-[#00E1EF] ${
+            currentPage === totalPages ? "hidden" : ""
+          }`}
+          onClick={handleLastClick}
+          disabled={currentPage === totalPages}
+        >
+          Last
+        </button>
       </div>
+       
+      <p className="text-slate-950 mt-4 ">Designed and developed by <a href="https://github.com/yulidarmaulana" target="_blank" rel="noopener noreferrer" className="text-slate-950 bg-yellow-300 hover:bg-yellow-500 p-2">Yulidar</a> | powered by <a href="http://jikan.moe/" target="_blank" rel="noopener noreferrer" className="text-slate-950 bg-sky-300 hover:bg-sky-500 p-2">Jikan</a></p>
+
     </>
   );
   };
