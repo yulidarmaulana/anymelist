@@ -1,27 +1,31 @@
 import { useState, useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
 import classNames from "classnames";
-const Anime = () => {
 
-  const [animeData, setAnimeData] = useState();
+
+const Recommendations = () => {
+    const [animeData, setAnimeData] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchTimeout, setSearchTimeout] = useState(null);
+  // const [filter, setFilter] = useState('');
 
   const [open, setOpen] = useState(false);
 
   const getData = async () => {
-    try {
-      const res = await fetch(`https://api.jikan.moe/v4/anime?sfw&page=${currentPage}&q=${searchTerm}`);
-      const data = await res.json();
-      setAnimeData(data.data);
-      setTotalPages(data.pagination.last_visible_page);
-      
-    } catch (error) {
-      console.error("Error fetching manga data:", error);
-    }
+    const res = await fetch(`https://api.jikan.moe/v4/seasons/now?page=${currentPage}&q=${searchTerm}`);
     
+    const data = await res.json();
+    setAnimeData(data.data);
+    setTotalPages(data.pagination.last_visible_page);
+    
+    // filter anime
+    // const filterRes = await fetch(`https://api.jikan.moe/v4/${filter}/animee?page=${currentPage}&q=${searchTerm}`);
+    // const filterData = await filterRes.json();
+    // setFilter(filterData.data);
+
+    // https://api.jikan.moe/v4/anime?order_by=popularity
   };
 
   useEffect(() => {
@@ -98,7 +102,7 @@ const Anime = () => {
 
   return (
     <>
-      <div className="flex justify-end gap-2 sticky top-24">
+      {/* <div className="flex justify-end gap-2 sticky top-24">
         <input
           className="w-28 xs:w-72 md:w-72 lg:w-72 xl:w-72 mt-4 items-baseline flex absolute bottom-4 mx-4 border-black border-2 p-2.5 text-slate-950  bg-[#A6FAFF] focus:outline-none focus:shadow-[2px_2px_0px_rgba(0,0,0,1)] focus:bg-[#FFA6F6] active:shadow-[2px_2px_0px_rgba(0,0,0,1)]"
           onSubmit={handleSearchSubmit}
@@ -106,7 +110,7 @@ const Anime = () => {
           value={searchTerm}
           onChange={handleSearch}
         />
-      </div>
+      </div> */}
 
       {/* Filter */}
       <div className="flex justify-end sticky top-24 mt-2">
@@ -120,7 +124,7 @@ const Anime = () => {
               aria-haspopup="true"
               onClick={() => setOpen(!open)}
             >
-              All
+              Recommendations
               <svg
                 className="mt-1 h-5 w-5"
                 viewBox="0 0 20 20"
@@ -151,31 +155,28 @@ const Anime = () => {
                 Ongoing
               </a> */}
               <form method="POST" action="#" role="none">
-              
-              <Link to="/Popular">
-                <button
-                  // type="submit"
-                  className="block w-full border-black border-b-2 px-4 py-2 text-left text-sm hover:bg-[#B8FF9F] hover:font-medium"
-                  // role="menuitem"
-                  // tabindex="-1"
-                  // id="menu-item-3"
-                >
-                  Top
-                </button>
-              </Link>
-
-                <Link to="/Recommendations">
-                <button
-                  // type="submit"
-                  className="block w-full border-black border-b-2 px-4 py-2 text-left text-sm hover:bg-[#B8FF9F] hover:font-medium"
-                  // role="menuitem"
-                  // tabindex="-1"
-                  // id="menu-item-3"
-                >
-                  Recommendations
-                </button>
-              </Link>
-
+                <Link to="/">
+                  <button
+                    // type="submit"
+                    className="block w-full border-black border-b-2 px-4 py-2 text-left text-sm hover:bg-[#B8FF9F] hover:font-medium"
+                    // role="menuitem"
+                    // tabindex="-1"
+                    // id="menu-item-3"
+                  >
+                    All
+                  </button>
+                </Link>
+                <Link to="/Popular">
+                  <button
+                    // type="submit"
+                    className="block w-full border-black border-b-2 px-4 py-2 text-left text-sm hover:bg-[#B8FF9F] hover:font-medium"
+                    // role="menuitem"
+                    // tabindex="-1"
+                    // id="menu-item-3"
+                  >
+                    Top
+                  </button>
+                </Link>
 
                 <button
                   type="submit"
@@ -244,7 +245,7 @@ const Anime = () => {
       </div>
 
       <div className="flex justify-center items-baseline space-x-4 p-4 border-black border-2 bg-[#FFBDC4] shadow-[4px_4px_0px_rgba(0,0,0,1)]">
-      <button
+        <button
           className={`h-12 border-black border-2 p-2.5 bg-[#A6FAFF] text-slate-950 hover:bg-[#79F7FF] hover:shadow-[4px_4px_0px_rgba(0,0,0,2)] active:bg-[#00E1EF] ${
             currentPage === 1 ? "hidden" : ""
           }`}
@@ -252,8 +253,8 @@ const Anime = () => {
           disabled={currentPage === 1}
         >
           First
-      </button>
-      
+        </button>
+
         <button
           className={`h-12 border-black border-2 p-2.5 bg-[#A6FAFF] text-slate-950 hover:bg-[#79F7FF] hover:shadow-[4px_4px_0px_rgba(0,0,0,2)] active:bg-[#00E1EF] ${
             currentPage === 1 ? "hidden" : ""
@@ -264,12 +265,14 @@ const Anime = () => {
           Prev
         </button>
 
-        <p className="text-slate-950">Page {currentPage} | {totalPages}</p>
+        <p className="text-slate-950">
+          Page {currentPage} | {totalPages}
+        </p>
 
         <button
           className={`h-12 border-black border-2 p-2.5 bg-[#A6FAFF] text-slate-950 hover:bg-[#79F7FF] hover:shadow-[4px_4px_0px_rgba(0,0,0,2)] active:bg-[#00E1EF] ${
             currentPage === totalPages ? "hidden" : ""
-          }`}
+          } `}
           onClick={handleNextClick}
           disabled={currentPage === totalPages}
         >
@@ -309,7 +312,6 @@ const Anime = () => {
       </p>
     </>
   );
+}
 
-};
-
-export default Anime;
+export default Recommendations

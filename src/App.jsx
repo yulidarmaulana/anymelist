@@ -8,6 +8,7 @@ import Manga from './pages/Manga'
 import NoPage from './pages/NoPage'
 import Detail from './pages/Detail'
 import DetailAnime from './pages/DetailAnime'
+import Recommendations from './pages/Recommendations'
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Anime />} />
           <Route path="Popular" element={<Popular />} />
+          <Route path="Recommendations" element={<Recommendations />} />
           <Route path="Manga" element={<Manga />} />
           <Route path="*" element={<NoPage />} />
           <Route path="/Detail/:mal_id" element={<Detail />} />

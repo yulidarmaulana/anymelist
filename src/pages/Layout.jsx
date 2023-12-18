@@ -13,12 +13,16 @@ const Layout = () => {
 
       <div className="space-x-4">
       
-        <button className={`h-12 border-black border-2 p-2.5 bg-[#A6FAFF] text-slate-950 ${pathname === "/" ? "bg-[#79F7FF] shadow-[4px_4px_0px_rgba(0,0,0,2)] font-semibold" : ""} `}>
+        <button className={`h-12 border-black border-2 p-2.5 bg-[#A6FAFF] text-slate-950 ${pathname === "/" || pathname === "/Popular" || pathname === "/DetailAnime" ? "bg-[#79F7FF] shadow-[4px_4px_0px_rgba(0,0,0,2)] font-semibold" : ""} `}>
             <Link to="/">Anime</Link>
         </button>
 
         {/* <button className={`h-12 border-black border-2 p-2.5 bg-[#A6FAFF] text-slate-950 ${pathname === "/Popular" ? "bg-[#79F7FF] shadow-[4px_4px_0px_rgba(0,0,0,2)]" : ""} `}>
             <Link to="/Popular">Popular</Link>
+        </button> */}
+
+        {/* <button className={`h-12 border-black border-2 p-2.5 bg-[#A6FAFF] text-slate-950 ${pathname === "/Recommendations" ? "bg-[#79F7FF] shadow-[4px_4px_0px_rgba(0,0,0,2)]" : ""} `}>
+            <Link to="/Recommendations">Recommendations</Link>
         </button> */}
 
         <button className={`h-12 border-black border-2 p-2.5 bg-[#A6FAFF] text-slate-950 ${pathname === "/Manga" ? "bg-[#79F7FF] shadow-[4px_4px_0px_rgba(0,0,0,2)] font-semibold" : ""} `}>
