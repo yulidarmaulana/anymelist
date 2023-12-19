@@ -2,30 +2,28 @@ import { useState, useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
 import classNames from "classnames";
 
-
-const Recommendations = () => {
-    const [animeData, setAnimeData] = useState();
+const Ongoing = () => {
+  const [animeData, setAnimeData] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchTimeout, setSearchTimeout] = useState(null);
-  // const [filter, setFilter] = useState('');
 
   const [open, setOpen] = useState(false);
 
   const getData = async () => {
-    const res = await fetch(`https://api.jikan.moe/v4/seasons/now?page=${currentPage}&q=${searchTerm}`);
-    
-    const data = await res.json();
-    setAnimeData(data.data);
-    setTotalPages(data.pagination.last_visible_page);
-    
-    // filter anime
-    // const filterRes = await fetch(`https://api.jikan.moe/v4/${filter}/animee?page=${currentPage}&q=${searchTerm}`);
-    // const filterData = await filterRes.json();
-    // setFilter(filterData.data);
+    try {
+      const res = await fetch(`https://api.jikan.moe/v4/anime?status=airing&page=${currentPage}&q=${searchTerm}&`);
+      // https://api.jikan.moe/v4/top/anime?page=${currentPage}&q=${searchTerm}
+      const data = await res.json();
+      setAnimeData(data.data);
+      setTotalPages(data.pagination.last_visible_page);
 
-    // https://api.jikan.moe/v4/anime?order_by=popularity
+   
+    } catch (error) {
+      console.error("Error fetching manga data:", error);
+    }
+     
   };
 
   useEffect(() => {
@@ -69,6 +67,7 @@ const Recommendations = () => {
 
   const handleNextClick = () => {
     setAnimeData(null);
+
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
     }
@@ -76,19 +75,16 @@ const Recommendations = () => {
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
+    setCurrentPage(1); // Reset current page when performing a new search
   };
 
   const handleSearchSubmit = (event) => {
     event.preventDefault();
     setCurrentPage(1); // Reset current page when performing a new search
-  }
+  };
 
-  // const handleFilter = (event) => {
-  //   setFilter(event.target.value);
-  //   setAnimeData(null);
-  // }
 
-  if (!animeData || animeData.length === 0) {
+  if (!animeData) {
     return (
       <>
         <div className="px-8 py-4 mt-4 bg-white border-2 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)] grid place-content-center">
@@ -98,19 +94,41 @@ const Recommendations = () => {
         </div>
       </>
     ); 
+  } 
+
+  if (animeData.length === 0) {
+    return (
+      <>
+      <div className="flex justify-end gap-2 sticky top-24">
+        <input
+          className="w-28 xs:w-72 md:w-72 lg:w-72 xl:w-72 mt-4 items-baseline flex absolute bottom-4 mx-4 border-black border-2 p-2.5 text-slate-950  bg-[#A6FAFF] focus:outline-none focus:shadow-[2px_2px_0px_rgba(0,0,0,1)] focus:bg-[#FFA6F6] active:shadow-[2px_2px_0px_rgba(0,0,0,1)]"
+          onSubmit={handleSearchSubmit}
+          placeholder="Search Anime Ongoing"
+          value={searchTerm}
+          onChange={handleSearch}
+        />
+      </div>
+
+        <div className="px-8 py-4 mt-4 bg-white border-2 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)] grid place-content-center">
+          <div>
+            <h1 className="text-2xl my-4 text-slate-950 animate-bounce">No Found</h1>
+          </div>
+        </div>
+      </>
+    ); 
   }
 
   return (
     <>
-      {/* <div className="flex justify-end gap-2 sticky top-24">
+      <div className="flex justify-end gap-2 sticky top-24">
         <input
           className="w-28 xs:w-72 md:w-72 lg:w-72 xl:w-72 mt-4 items-baseline flex absolute bottom-4 mx-4 border-black border-2 p-2.5 text-slate-950  bg-[#A6FAFF] focus:outline-none focus:shadow-[2px_2px_0px_rgba(0,0,0,1)] focus:bg-[#FFA6F6] active:shadow-[2px_2px_0px_rgba(0,0,0,1)]"
           onSubmit={handleSearchSubmit}
-          placeholder="Search Anime"
+          placeholder="Search Anime Ongoing"
           value={searchTerm}
           onChange={handleSearch}
         />
-      </div> */}
+      </div>
 
       {/* Filter */}
       <div className="flex justify-end sticky top-24 mt-2">
@@ -124,7 +142,7 @@ const Recommendations = () => {
               aria-haspopup="true"
               onClick={() => setOpen(!open)}
             >
-              Recommendations
+              Ongoing
               <svg
                 className="mt-1 h-5 w-5"
                 viewBox="0 0 20 20"
@@ -155,38 +173,41 @@ const Recommendations = () => {
                 Ongoing
               </a> */}
               <form method="POST" action="#" role="none">
-                <Link to="/">
-                  <button
-                    // type="submit"
-                    className="block w-full border-black border-b-2 px-4 py-2 text-left text-sm hover:bg-[#B8FF9F] hover:font-medium"
-                    // role="menuitem"
-                    // tabindex="-1"
-                    // id="menu-item-3"
-                  >
-                    All
-                  </button>
-                </Link>
-                <Link to="/Popular">
-                  <button
-                    // type="submit"
-                    className="block w-full border-black border-b-2 px-4 py-2 text-left text-sm hover:bg-[#B8FF9F] hover:font-medium"
-                    // role="menuitem"
-                    // tabindex="-1"
-                    // id="menu-item-3"
-                  >
-                    Top
-                  </button>
-                </Link>
-
+              <Link to="/">
                 <button
-                  type="submit"
+                  // type="submit"
                   className="block w-full border-black border-b-2 px-4 py-2 text-left text-sm hover:bg-[#B8FF9F] hover:font-medium"
-                  role="menuitem"
+                  // role="menuitem"
                   // tabindex="-1"
-                  id="menu-item-3"
+                  // id="menu-item-3"
                 >
-                  Ongoing
+                  All
                 </button>
+              </Link>
+
+                <Link to="/Top">
+                <button
+                  // type="submit"
+                  className="block w-full border-black border-b-2 px-4 py-2 text-left text-sm hover:bg-[#B8FF9F] hover:font-medium"
+                  // role="menuitem"
+                  // tabindex="-1"
+                  // id="menu-item-3"
+                >
+                  Top
+                </button>
+              </Link>
+
+              <Link to="/Upcoming">
+                <button
+                  // type="submit"
+                  className="block w-full border-black border-b-2 px-4 py-2 text-left text-sm hover:bg-[#B8FF9F] hover:font-medium"
+                  // role="menuitem"
+                  // tabindex="-1"
+                  // id="menu-item-3"
+                >
+                  Upcoming
+                </button>
+              </Link>
               </form>
             </div>
           </div>
@@ -312,6 +333,6 @@ const Recommendations = () => {
       </p>
     </>
   );
-}
+};
 
-export default Recommendations
+export default Ongoing;

@@ -2,27 +2,30 @@ import { useState, useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
 import classNames from "classnames";
 
-const Popular = () => {
-  const [animeData, setAnimeData] = useState();
+
+const Top = () => {
+    const [animeData, setAnimeData] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  // const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
   const [searchTimeout, setSearchTimeout] = useState(null);
+  // const [filter, setFilter] = useState('');
 
   const [open, setOpen] = useState(false);
 
   const getData = async () => {
-    try {
-      const res = await fetch(`https://api.jikan.moe/v4/top/anime?page=${currentPage}`);
-      // https://api.jikan.moe/v4/top/anime?page=${currentPage}&q=${searchTerm}
-      const data = await res.json();
-      setAnimeData(data.data);
-      setTotalPages(data.pagination.last_visible_page);
-   
-    } catch (error) {
-      console.error("Error fetching manga data:", error);
-    }
-     
+    const res = await fetch(`https://api.jikan.moe/v4/top/anime?page=${currentPage}&q=${searchTerm}`);
+    
+    const data = await res.json();
+    setAnimeData(data.data);
+    setTotalPages(data.pagination.last_visible_page);
+    
+    // filter anime
+    // const filterRes = await fetch(`https://api.jikan.moe/v4/${filter}/animee?page=${currentPage}&q=${searchTerm}`);
+    // const filterData = await filterRes.json();
+    // setFilter(filterData.data);
+
+    // https://api.jikan.moe/v4/anime?order_by=popularity
   };
 
   useEffect(() => {
@@ -44,7 +47,7 @@ const Popular = () => {
       }
     };
 
-  }, [currentPage]);
+  }, [currentPage, searchTerm]);
 
   const handleFirstClick = () => {
     setAnimeData(null);
@@ -66,7 +69,6 @@ const Popular = () => {
 
   const handleNextClick = () => {
     setAnimeData(null);
-
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
     }
@@ -79,8 +81,12 @@ const Popular = () => {
   // const handleSearchSubmit = (event) => {
   //   event.preventDefault();
   //   setCurrentPage(1); // Reset current page when performing a new search
-  // };
+  // }
 
+  // const handleFilter = (event) => {
+  //   setFilter(event.target.value);
+  //   setAnimeData(null);
+  // }
 
   if (!animeData || animeData.length === 0) {
     return (
@@ -149,31 +155,30 @@ const Popular = () => {
                 Ongoing
               </a> */}
               <form method="POST" action="#" role="none">
-              <Link to="/">
-                <button
-                  // type="submit"
-                  className="block w-full border-black border-b-2 px-4 py-2 text-left text-sm hover:bg-[#B8FF9F] hover:font-medium"
-                  // role="menuitem"
-                  // tabindex="-1"
-                  // id="menu-item-3"
-                >
-                  All
-                </button>
-              </Link>
+                <Link to="/">
+                  <button
+                    // type="submit"
+                    className="block w-full border-black border-b-2 px-4 py-2 text-left text-sm hover:bg-[#B8FF9F] hover:font-medium"
+                    // role="menuitem"
+                    // tabindex="-1"
+                    // id="menu-item-3"
+                  >
+                    All
+                  </button>
+                </Link>
+                <Link to="/Upcoming">
+                  <button
+                    // type="submit"
+                    className="block w-full border-black border-b-2 px-4 py-2 text-left text-sm hover:bg-[#B8FF9F] hover:font-medium"
+                    // role="menuitem"
+                    // tabindex="-1"
+                    // id="menu-item-3"
+                  >
+                    Upcoming
+                  </button>
+                </Link>
 
-                <Link to="/Recommendations">
-                <button
-                  // type="submit"
-                  className="block w-full border-black border-b-2 px-4 py-2 text-left text-sm hover:bg-[#B8FF9F] hover:font-medium"
-                  // role="menuitem"
-                  // tabindex="-1"
-                  // id="menu-item-3"
-                >
-                  Recommendations
-                </button>
-              </Link>
-
-
+                <Link to="/Ongoing">
                 <button
                   type="submit"
                   className="block w-full border-black border-b-2 px-4 py-2 text-left text-sm hover:bg-[#B8FF9F] hover:font-medium"
@@ -183,6 +188,7 @@ const Popular = () => {
                 >
                   Ongoing
                 </button>
+              </Link>
               </form>
             </div>
           </div>
@@ -308,6 +314,6 @@ const Popular = () => {
       </p>
     </>
   );
-};
+}
 
-export default Popular;
+export default Top

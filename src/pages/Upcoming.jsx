@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
 import classNames from "classnames";
-const Anime = () => {
 
+const Upcoming = () => {
   const [animeData, setAnimeData] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -13,15 +13,16 @@ const Anime = () => {
 
   const getData = async () => {
     try {
-      const res = await fetch(`https://api.jikan.moe/v4/anime?sfw&page=${currentPage}&q=${searchTerm}`);
+      const res = await fetch(`https://api.jikan.moe/v4/anime?status=upcoming&page=${currentPage}&q=${searchTerm}`);
+      // https://api.jikan.moe/v4/top/anime?page=${currentPage}&q=${searchTerm}
       const data = await res.json();
       setAnimeData(data.data);
       setTotalPages(data.pagination.last_visible_page);
-      
+   
     } catch (error) {
       console.error("Error fetching manga data:", error);
     }
-    
+     
   };
 
   useEffect(() => {
@@ -65,6 +66,7 @@ const Anime = () => {
 
   const handleNextClick = () => {
     setAnimeData(null);
+
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
     }
@@ -72,14 +74,16 @@ const Anime = () => {
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
+    setCurrentPage(1); // Reset current page when performing a new search
   };
 
   const handleSearchSubmit = (event) => {
     event.preventDefault();
     setCurrentPage(1); // Reset current page when performing a new search
-  }
+  };
 
-  if (!animeData || animeData.length === 0) {
+
+  if (!animeData) {
     return (
       <>
         <div className="px-8 py-4 mt-4 bg-white border-2 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)] grid place-content-center">
@@ -89,15 +93,37 @@ const Anime = () => {
         </div>
       </>
     ); 
+  } 
+
+  if (animeData.length === 0) {
+    return (
+      <>
+      <div className="flex justify-end gap-2 sticky top-24">
+        <input
+          className="w-28 xs:w-72 md:w-72 lg:w-72 xl:w-72 mt-4 items-baseline flex absolute bottom-4 mx-4 border-black border-2 p-2.5 text-slate-950  bg-[#A6FAFF] focus:outline-none focus:shadow-[2px_2px_0px_rgba(0,0,0,1)] focus:bg-[#FFA6F6] active:shadow-[2px_2px_0px_rgba(0,0,0,1)]"
+          onSubmit={handleSearchSubmit}
+          placeholder="Search Anime Ongoing"
+          value={searchTerm}
+          onChange={handleSearch}
+        />
+      </div>
+      
+        <div className="px-8 py-4 mt-4 bg-white border-2 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)] grid place-content-center">
+          <div>
+            <h1 className="text-2xl my-4 text-slate-950 animate-bounce">No Found</h1>
+          </div>
+        </div>
+      </>
+    ); 
   }
 
   return (
     <>
-      <div className="flex justify-end gap-2 sticky top-[6rem]">
+      <div className="flex justify-end gap-2 sticky top-24">
         <input
-          className="w-28 xs:w-72 md:w-72 lg:w-72 xl:w-72 mt-4 items-baseline flex absolute bottom-[1rem] mx-4 border-black border-2 p-2.5 text-slate-950  bg-[#A6FAFF] focus:outline-none focus:shadow-[2px_2px_0px_rgba(0,0,0,1)] focus:bg-[#FFA6F6] active:shadow-[2px_2px_0px_rgba(0,0,0,1)]"
+          className="w-28 xs:w-72 md:w-72 lg:w-72 xl:w-72 mt-4 items-baseline flex absolute bottom-4 mx-4 border-black border-2 p-2.5 text-slate-950  bg-[#A6FAFF] focus:outline-none focus:shadow-[2px_2px_0px_rgba(0,0,0,1)] focus:bg-[#FFA6F6] active:shadow-[2px_2px_0px_rgba(0,0,0,1)]"
           onSubmit={handleSearchSubmit}
-          placeholder="Search Anime"
+          placeholder="Search Anime Upcoming"
           value={searchTerm}
           onChange={handleSearch}
         />
@@ -105,7 +131,7 @@ const Anime = () => {
 
       {/* Filter */}
       <div className="flex justify-end sticky top-24 mt-2">
-        <div className="inline-block text-left mx-4 relative">
+        <div className="inline-block text-left mx-4 relative ">
           <div>
             <button
               type="button"
@@ -115,7 +141,7 @@ const Anime = () => {
               aria-haspopup="true"
               onClick={() => setOpen(!open)}
             >
-              Filter
+              Upcoming
               <svg
                 className="mt-1 h-5 w-5"
                 viewBox="0 0 20 20"
@@ -137,9 +163,28 @@ const Anime = () => {
             aria-labelledby="menu-button"
           >
             <div role="none">
+              {/* <a
+                href=""
+                className="block px-4 py-2 text-sm border-black border-b-2 hover:bg-[#B8FF9F] hover:font-medium"
+                role="menuitem"
+                id="menu-item-2"
+              >
+                Ongoing
+              </a> */}
               <form method="POST" action="#" role="none">
+              <Link to="/">
+                <button
+                  // type="submit"
+                  className="block w-full border-black border-b-2 px-4 py-2 text-left text-sm hover:bg-[#B8FF9F] hover:font-medium"
+                  // role="menuitem"
+                  // tabindex="-1"
+                  // id="menu-item-3"
+                >
+                  All
+                </button>
+              </Link>
 
-              <Link to="/Top">
+                <Link to="/Top">
                 <button
                   // type="submit"
                   className="block w-full border-black border-b-2 px-4 py-2 text-left text-sm hover:bg-[#B8FF9F] hover:font-medium"
@@ -150,8 +195,9 @@ const Anime = () => {
                   Top
                 </button>
               </Link>
-              
-              <Link to="/Upcoming">
+
+
+              <Link to="/Ongoing">
                 <button
                   // type="submit"
                   className="block w-full border-black border-b-2 px-4 py-2 text-left text-sm hover:bg-[#B8FF9F] hover:font-medium"
@@ -159,22 +205,9 @@ const Anime = () => {
                   // tabindex="-1"
                   // id="menu-item-3"
                 >
-                  Upcoming
-                </button>
-              </Link>
-
-              <Link to="/Ongoing">
-                <button
-                  type="submit"
-                  className="block w-full border-black border-b-2 px-4 py-2 text-left text-sm hover:bg-[#B8FF9F] hover:font-medium"
-                  role="menuitem"
-                  // tabindex="-1"
-                  id="menu-item-3"
-                >
                   Ongoing
                 </button>
               </Link>
-
               </form>
             </div>
           </div>
@@ -233,7 +266,7 @@ const Anime = () => {
       </div>
 
       <div className="flex justify-center items-baseline space-x-4 p-4 border-black border-2 bg-[#FFBDC4] shadow-[4px_4px_0px_rgba(0,0,0,1)]">
-      <button
+        <button
           className={`h-12 border-black border-2 p-2.5 bg-[#A6FAFF] text-slate-950 hover:bg-[#79F7FF] hover:shadow-[4px_4px_0px_rgba(0,0,0,2)] active:bg-[#00E1EF] ${
             currentPage === 1 ? "hidden" : ""
           }`}
@@ -241,8 +274,8 @@ const Anime = () => {
           disabled={currentPage === 1}
         >
           First
-      </button>
-      
+        </button>
+
         <button
           className={`h-12 border-black border-2 p-2.5 bg-[#A6FAFF] text-slate-950 hover:bg-[#79F7FF] hover:shadow-[4px_4px_0px_rgba(0,0,0,2)] active:bg-[#00E1EF] ${
             currentPage === 1 ? "hidden" : ""
@@ -253,12 +286,14 @@ const Anime = () => {
           Prev
         </button>
 
-        <p className="text-slate-950">Page {currentPage} | {totalPages}</p>
+        <p className="text-slate-950">
+          Page {currentPage} | {totalPages}
+        </p>
 
         <button
           className={`h-12 border-black border-2 p-2.5 bg-[#A6FAFF] text-slate-950 hover:bg-[#79F7FF] hover:shadow-[4px_4px_0px_rgba(0,0,0,2)] active:bg-[#00E1EF] ${
             currentPage === totalPages ? "hidden" : ""
-          }`}
+          } `}
           onClick={handleNextClick}
           disabled={currentPage === totalPages}
         >
@@ -298,7 +333,6 @@ const Anime = () => {
       </p>
     </>
   );
-
 };
 
-export default Anime;
+export default Upcoming;
