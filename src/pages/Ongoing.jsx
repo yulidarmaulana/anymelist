@@ -13,7 +13,7 @@ const Ongoing = () => {
 
   const getData = async () => {
     try {
-      const res = await fetch(`https://api.jikan.moe/v4/anime?status=airing&page=${currentPage}&q=${searchTerm}&`);
+      const res = await fetch(`https://api.jikan.moe/v4/anime?status=airing&page=${currentPage}&q=${searchTerm}`);
       // https://api.jikan.moe/v4/top/anime?page=${currentPage}&q=${searchTerm}
       const data = await res.json();
       setAnimeData(data.data);

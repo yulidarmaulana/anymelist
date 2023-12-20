@@ -72,6 +72,7 @@ const Anime = () => {
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
+    setCurrentPage(1); // Reset current page when performing a new search
   };
 
   const handleSearchSubmit = (event) => {
@@ -79,12 +80,34 @@ const Anime = () => {
     setCurrentPage(1); // Reset current page when performing a new search
   }
 
-  if (!animeData || animeData.length === 0) {
+  if (!animeData) {
     return (
       <>
         <div className="px-8 py-4 mt-4 bg-white border-2 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)] grid place-content-center">
           <div>
             <h1 className="text-2xl my-4 text-slate-950 animate-bounce">Loading</h1>
+          </div>
+        </div>
+      </>
+    ); 
+  }
+
+  if (animeData.length === 0) {
+    return (
+      <>
+      <div className="flex justify-end gap-2 sticky top-24">
+        <input
+          className="w-28 xs:w-72 md:w-72 lg:w-72 xl:w-72 mt-4 items-baseline flex absolute bottom-4 mx-4 border-black border-2 p-2.5 text-slate-950  bg-[#A6FAFF] focus:outline-none focus:shadow-[2px_2px_0px_rgba(0,0,0,1)] focus:bg-[#FFA6F6] active:shadow-[2px_2px_0px_rgba(0,0,0,1)]"
+          onSubmit={handleSearchSubmit}
+          placeholder="Search Anime Ongoing"
+          value={searchTerm}
+          onChange={handleSearch}
+        />
+      </div>
+
+        <div className="px-8 py-4 mt-4 bg-white border-2 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)] grid place-content-center">
+          <div>
+            <h1 className="text-2xl my-4 text-slate-950 animate-bounce">No Found</h1>
           </div>
         </div>
       </>
