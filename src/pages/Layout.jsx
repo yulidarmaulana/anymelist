@@ -9,11 +9,11 @@ const Layout = () => {
     <>
       {/* <h1 className="text-6xl mb-4 font-public-sans font-semibold text-slate-950"><Link to="/">- Anymelist -</Link>  </h1> */}
 
-      <div className="flex justify-between relative sticky top-2 items-baseline space-x-4 p-4 border-black border-2 bg-[#FFBDC4] shadow-[4px_4px_0px_rgba(0,0,0,1)]">
+      <div className="flex justify-between sticky top-2 items-baseline space-x-4 p-4 border-black border-2 bg-[#FFBDC4] shadow-[4px_4px_0px_rgba(0,0,0,1)]">
 
       <div className="space-x-4">
       
-        <button className={`h-12 border-black border-2 p-2.5 bg-[#A6FAFF] text-slate-950 ${pathname === "/" || pathname === "/Top" || pathname === "/Ongoing" || pathname === "/Recommendations" || pathname === "/Upcoming" || pathname === "/DetailAnime" ? "bg-[#79F7FF] shadow-[4px_4px_0px_rgba(0,0,0,2)] font-semibold" : ""} `}>
+        <button className={`h-12 border-black border-2 p-2.5 bg-[#A6FAFF] text-slate-950 ${pathname === "/" || pathname === "/Complete" || pathname === "/Ongoing" || pathname === "/Upcoming" || pathname === "/DetailAnime" ? "bg-[#79F7FF] shadow-[4px_4px_0px_rgba(0,0,0,2)] font-semibold" : ""} `}>
             <Link to="/">Anime</Link>
         </button>
 
@@ -25,7 +25,7 @@ const Layout = () => {
             <Link to="/Recommendations">Recommendations</Link>
         </button> */}
 
-        <button className={`h-12 border-black border-2 p-2.5 bg-[#A6FAFF] text-slate-950 ${pathname === "/Manga" ? "bg-[#79F7FF] shadow-[4px_4px_0px_rgba(0,0,0,2)] font-semibold" : ""} `}>
+        <button className={`h-12 border-black border-2 p-2.5 bg-[#A6FAFF] text-slate-950 ${pathname === "/Manga" || pathname === "/Manga/Complete" || pathname === "/Manga/Publishing" || pathname === "/Manga/Hiatus"  || pathname === "/Manga/Discontinued" ? "bg-[#79F7FF] shadow-[4px_4px_0px_rgba(0,0,0,2)] font-semibold" : ""} `}>
             <Link to="/Manga">Manga</Link>
         </button>
       

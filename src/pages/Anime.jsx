@@ -162,7 +162,7 @@ const Anime = () => {
             <div role="none">
               <form method="POST" action="#" role="none">
 
-              <Link to="/Top">
+              <Link to="/Complete">
                 <button
                   // type="submit"
                   className="block w-full border-black border-b-2 px-4 py-2 text-left text-sm hover:bg-[#B8FF9F] hover:font-medium"
@@ -170,17 +170,13 @@ const Anime = () => {
                   // tabindex="-1"
                   // id="menu-item-3"
                 >
-                  Top
+                  Complete
                 </button>
               </Link>
               
               <Link to="/Upcoming">
                 <button
-                  // type="submit"
                   className="block w-full border-black border-b-2 px-4 py-2 text-left text-sm hover:bg-[#B8FF9F] hover:font-medium"
-                  // role="menuitem"
-                  // tabindex="-1"
-                  // id="menu-item-3"
                 >
                   Upcoming
                 </button>

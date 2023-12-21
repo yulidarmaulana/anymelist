@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Outlet, Link } from "react-router-dom";
 import classNames from "classnames";
 
-const Manga = () => {
+const DiscontinuedManga = () => {
   const [mangaData, setAnimeData] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -14,7 +14,7 @@ const Manga = () => {
 
   const getData = async () => {
     try {
-      const res = await fetch(`https://api.jikan.moe/v4/manga?sfw&page=${currentPage}&q=${searchTerm}`);
+      const res = await fetch(`https://api.jikan.moe/v4/manga?status=discontinued&page=${currentPage}&q=${searchTerm}`);
       const data = await res.json();
       setAnimeData(data.data);
       setTotalPages(data.pagination.last_visible_page);
@@ -75,7 +75,6 @@ const Manga = () => {
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
-    setCurrentPage(1); // Reset current page when performing a new search
   };
 
   const handleSearchSubmit = (event) => {
@@ -142,7 +141,7 @@ const Manga = () => {
               aria-haspopup="true"
               onClick={() => setOpen(!open)}
             >
-              Filter
+              Discontinued
               <svg
                 className="mt-1 h-5 w-5"
                 viewBox="0 0 20 20"
@@ -166,13 +165,17 @@ const Manga = () => {
             <div role="none">
               <form method="POST" action="#" role="none">
 
+              <Link to="/Manga">
+                <button
+                  className="block w-full border-black border-b-2 px-4 py-2 text-left text-sm hover:bg-[#B8FF9F] hover:font-medium"
+                >
+                  All
+                </button>
+              </Link>
+
               <Link to="/Manga/Complete">
                 <button
-                  // type="submit"
                   className="block w-full border-black border-b-2 px-4 py-2 text-left text-sm hover:bg-[#B8FF9F] hover:font-medium"
-                  // role="menuitem"
-                  // tabindex="-1"
-                  // id="menu-item-3"
                 >
                   Complete
                 </button>
@@ -180,11 +183,7 @@ const Manga = () => {
               
               <Link to="/Manga/Publishing">
                 <button
-                  // type="submit"
                   className="block w-full border-black border-b-2 px-4 py-2 text-left text-sm hover:bg-[#B8FF9F] hover:font-medium"
-                  // role="menuitem"
-                  // tabindex="-1"
-                  // id="menu-item-3"
                 >
                   Publishing
                 </button>
@@ -199,18 +198,6 @@ const Manga = () => {
                   id="menu-item-3"
                 >
                   Hiatus
-                </button>
-              </Link>
-
-              <Link to="/Manga/Discontinued">
-                <button
-                  type="submit"
-                  className="block w-full border-black border-b-2 px-4 py-2 text-left text-sm hover:bg-[#B8FF9F] hover:font-medium"
-                  role="menuitem"
-                  // tabindex="-1"
-                  id="menu-item-3"
-                >
-                  Discontinued
                 </button>
               </Link>
 
@@ -300,6 +287,6 @@ const Manga = () => {
 
     </>
   );
-  };
-  
-  export default Manga;
+}
+
+export default DiscontinuedManga

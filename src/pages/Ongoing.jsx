@@ -14,7 +14,7 @@ const Ongoing = () => {
   const getData = async () => {
     try {
       const res = await fetch(`https://api.jikan.moe/v4/anime?status=airing&page=${currentPage}&q=${searchTerm}`);
-      // https://api.jikan.moe/v4/top/anime?page=${currentPage}&q=${searchTerm}
+      
       const data = await res.json();
       setAnimeData(data.data);
       setTotalPages(data.pagination.last_visible_page);
@@ -185,7 +185,7 @@ const Ongoing = () => {
                 </button>
               </Link>
 
-                <Link to="/Top">
+              <Link to="/Complete">
                 <button
                   // type="submit"
                   className="block w-full border-black border-b-2 px-4 py-2 text-left text-sm hover:bg-[#B8FF9F] hover:font-medium"
@@ -193,7 +193,7 @@ const Ongoing = () => {
                   // tabindex="-1"
                   // id="menu-item-3"
                 >
-                  Top
+                  Complete
                 </button>
               </Link>
 
