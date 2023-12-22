@@ -122,31 +122,23 @@ const DetailAnime = () => {
             </div>
           </article>
 
-          <div className="m-6 mt-8 text-slate-950 border-black border-2 shadow-[8px_8px_0px_rgba(0,0,0,1)] bg-[#F2F7F5]">
-            <div className="w-full h-screen flex">
-              <Iframe
-                url={detailAnime.trailer.embed_url}
-                width="100%"
-                height="100%"
-                alt={detailAnime.title}
-              />
-            </div>
-          </div>
+          
 
           <p className="text-2xl mt-6 font-public-sans font-semibold text-slate-950">
            Character
           </p>
+
           <div className="flex justify-center">
-            {character.slice(0, 5).map((character) => (
-              <div className="m-4 mt-6" key={character.mal_id}>
-                <div className="w-full px-2 py-4 bg-white border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)] grid place-content-center">
+            {character.filter((character) => character.role == "Main").slice(0, 5).map((character) => (
+              <div className="m-4 mt-6 h-fit" key={character.mal_id}>
+                <div className="bg-[#F2F7F5] border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)] grid place-content-center">
                   <div>
-                    <h1 className="text-2xl mb-4">
+                    <h1 className="text-xl mb-4">
                       {character.character.name}
                     </h1>
-                    <div className="flex space-x-2 mx-auto justify-center">
+                    <div className="flex mx-auto justify-center">
                       <img
-                        className="w-32 h-32"
+                        className="w-24 object-contain"
                         src={character.character.images.jpg.image_url}
                         alt={character.name}
                       />
@@ -156,6 +148,19 @@ const DetailAnime = () => {
               </div>
             ))}
           </div>
+
+          <div className="m-6 mt-8 text-slate-950 border-black border-2 shadow-[8px_8px_0px_rgba(0,0,0,1)] bg-[#F2F7F5]">
+            <div className="w-full h-full"> 
+              <Iframe
+                url={detailAnime.trailer.embed_url + "?controls=1&autohide=1&showinfo=0"} 
+                width="100%"
+                height="100%"
+                
+                alt={detailAnime.title}
+              />
+            </div>
+          </div>
+
         </div>
       )}
 
