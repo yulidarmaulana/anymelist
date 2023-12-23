@@ -12,6 +12,7 @@ const Manga = () => {
 
   const [open, setOpen] = useState(false);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const getData = async () => {
     try {
       const res = await fetch(`https://api.jikan.moe/v4/manga?sfw&page=${currentPage}&q=${searchTerm}`);
@@ -45,7 +46,7 @@ const Manga = () => {
       }
     };
 
-  }, [currentPage, searchTerm]);
+  }, [currentPage, getData, searchTerm, searchTimeout]);
 
   const handleFirstClick = () => {
     setAnimeData(null);

@@ -11,6 +11,7 @@ const Anime = () => {
 
   const [open, setOpen] = useState(false);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const getData = async () => {
     try {
       const res = await fetch(`https://api.jikan.moe/v4/anime?sfw&page=${currentPage}&q=${searchTerm}`);
@@ -43,7 +44,7 @@ const Anime = () => {
       }
     };
 
-  }, [currentPage, searchTerm]);
+  }, [currentPage, getData, searchTerm, searchTimeout]);
 
   const handleFirstClick = () => {
     setAnimeData(null);
