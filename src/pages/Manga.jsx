@@ -46,7 +46,7 @@ const Manga = () => {
       }
     };
 
-  }, [currentPage, getData, searchTerm, searchTimeout]);
+  }, [currentPage, searchTerm]);
 
   const handleFirstClick = () => {
     setAnimeData(null);
