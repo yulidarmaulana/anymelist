@@ -83,32 +83,42 @@ const Detail = () => {
         </div>
       )}
 
-      
-      <p className="text-2xl mt-6 font-public-sans font-semibold text-slate-950">Recommendation</p>
-      
+      <div className="">
+        {recommendations.length > 0 && (
+          <p className="text-2xl mt-6 font-public-sans font-semibold text-slate-950">
+            Recommendation
+          </p>
+        )}
+      </div>
+
       <div className="grid xs:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 grid-cols-1 gap-4 mb-4">
-
-      {recommendations.map(recommendation => (        
-          <div key={recommendation.entry.mal_id}
-          className="mt-8 text-slate-950 border-black border-4 hover:shadow-[8px_8px_0px_rgba(0,0,0,1)] bg-[#F2F7F5]"
-        >
-          <Link key={recommendation.entry.mal_id} to={`/Detail/${recommendation.entry.mal_id}`}>
-          <article className="w-full h-full">
-              <figure className="w-full border-black border-b-2">
-                <img
-                 src={recommendation.entry.images.jpg.image_url}
-                 alt={recommendation.entry.title}
-                  className="object-fill h-64 w-full"
-                />
-              </figure>
-              <div className="px-6 py-5 text-left h-fit">
-                <h1 className="text-xl mb-4 truncate"> {recommendation.entry.title} </h1>
-              </div>
-            </article>
-          </Link>
-
-        </div>
-      ))} 
+        {recommendations.map((recommendation) => (
+          <div
+            key={recommendation.entry.mal_id}
+            className="mt-8 text-slate-950 border-black border-4 hover:shadow-[8px_8px_0px_rgba(0,0,0,1)] bg-[#F2F7F5]"
+          >
+            <Link
+              key={recommendation.entry.mal_id}
+              to={`/Detail/${recommendation.entry.mal_id}`}
+            >
+              <article className="w-full h-full">
+                <figure className="w-full border-black border-b-2">
+                  <img
+                    src={recommendation.entry.images.jpg.image_url}
+                    alt={recommendation.entry.title}
+                    className="object-fill h-64 w-full"
+                  />
+                </figure>
+                <div className="px-6 py-5 text-left h-fit">
+                  <h1 className="text-xl mb-4 truncate">
+                    {" "}
+                    {recommendation.entry.title}{" "}
+                  </h1>
+                </div>
+              </article>
+            </Link>
+          </div>
+        ))}
       </div>
 
       <p className="text-slate-950 mt-4 ">
@@ -131,7 +141,6 @@ const Detail = () => {
           Jikan
         </a>
       </p>
-
     </>
   );
 };

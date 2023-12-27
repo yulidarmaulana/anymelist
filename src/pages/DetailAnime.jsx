@@ -164,9 +164,14 @@ const DetailAnime = () => {
         </div>
       )}
 
-      <p className="text-2xl mt-6 font-public-sans font-semibold text-slate-950">
-        Recommendation
-      </p>
+      <div className="">
+        {recommendations.length > 0 && (
+                <p className="text-2xl mt-6 font-public-sans font-semibold text-slate-950">
+                Recommendation
+              </p>
+        )}
+      </div>
+
 
       <div className="grid xs:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 grid-cols-1 gap-4 mb-4">
         {recommendations.slice(0, 10).map((recommendation) => (
