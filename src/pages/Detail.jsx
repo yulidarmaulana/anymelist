@@ -19,9 +19,11 @@ const Detail = () => {
 
     } catch (error) {
       console.error("Error fetching manga details:", error);
+      
     }
-  };
 
+}
+    
   useEffect(() => {
     getData();
   });
@@ -40,7 +42,17 @@ const Detail = () => {
 
   return (
     <>
-      <button className="h-12 border-black border-2 p-2 mt-4 flex justify-start bg-yellow-200 hover:bg-yellow-300 text-slate-950 hover:shadow-[4px_4px_0px_rgba(0,0,0,2)] active:bg-yellow-400">
+   {/* <div className="flex justify-end gap-2 sticky top-24">
+        <input
+          className="w-28 xs:w-72 md:w-72 lg:w-72 xl:w-72 mt-4 items-baseline flex absolute bottom-4 mx-4 border-black border-2 p-2.5 text-slate-950  bg-[#A6FAFF] focus:outline-none focus:shadow-[2px_2px_0px_rgba(0,0,0,1)] focus:bg-[#FFA6F6] active:shadow-[2px_2px_0px_rgba(0,0,0,1)]"
+          onSubmit={handleSearchSubmit}
+          placeholder="Search Anime Ongoing"
+          value={searchTerm}
+          onChange={handleSearch}
+        />
+      </div> */}
+      
+      <button className="h-12 border-black border-2 p-2 flex justify-start sticky top-24 mt-4 bg-yellow-200 hover:bg-yellow-300 text-slate-950 hover:shadow-[4px_4px_0px_rgba(0,0,0,2)] active:bg-yellow-400">
         <Link to="/Manga">back</Link>
       </button>
 

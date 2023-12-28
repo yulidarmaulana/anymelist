@@ -3,34 +3,34 @@ import { useParams , Link} from "react-router-dom";
 import Iframe from 'react-iframe'
 
 const DetailAnime = () => {
-    const [detailAnime, setdetailAnime] = useState();
+    const [detailAnime, setDetailAnime] = useState();
     const [recommendations, setRecommendations] = useState([]);
     const [character, setCharacters] = useState([]);
     const animeId = useParams().mal_id;
 
     const getData = async () => {
-        try {
-          const res = await fetch(`https://api.jikan.moe/v4/anime/${animeId}`);
-          const data = await res.json();
-          setdetailAnime(data.data);
+      try {
+        const res = await fetch(`https://api.jikan.moe/v4/anime/${animeId}`);
+        const data = await res.json();
+        setDetailAnime(data.data);
 
-          const recommendationsRes = await fetch(`https://api.jikan.moe/v4/anime/${animeId}/recommendations`);
-          const recommendationsData = await recommendationsRes.json();
-          setRecommendations(recommendationsData.data);
+        const recommendationsRes = await fetch(`https://api.jikan.moe/v4/anime/${animeId}/recommendations`);
+        const recommendationsData = await recommendationsRes.json();
+        setRecommendations(recommendationsData.data);
 
-          const charactersRes = await fetch(`https://api.jikan.moe/v4/anime/${animeId}/characters`);
-          const charactersData = await charactersRes.json();
-          setCharacters(charactersData.data);
+        const charactersRes = await fetch(`https://api.jikan.moe/v4/anime/${animeId}/characters`);
+        const charactersData = await charactersRes.json();
+        setCharacters(charactersData.data);
 
 
-    }catch (error) {
-      console.error("Error fetching anime details:", error);
-    }
-  };
+  }catch (error) {
+    console.error("Error fetching anime details:", error);
+  }
+};
 
-  useEffect(() => {    
-    getData();
-  })
+useEffect(() => {    
+  getData();
+})
 
   if (!detailAnime) {
     return (
@@ -47,7 +47,17 @@ const DetailAnime = () => {
 
   return (
     <>
-      <button className="h-12 border-black border-2 p-2 mt-4 flex justify-start bg-yellow-200 hover:bg-yellow-300 text-slate-950 hover:shadow-[4px_4px_0px_rgba(0,0,0,2)] active:bg-yellow-400">
+    {/* <div className="flex justify-end gap-2 sticky top-24">
+        <input
+          className="w-28 xs:w-72 md:w-72 lg:w-72 xl:w-72 mt-4 items-baseline flex absolute bottom-4 mx-4 border-black border-2 p-2.5 text-slate-950  bg-[#A6FAFF] focus:outline-none focus:shadow-[2px_2px_0px_rgba(0,0,0,1)] focus:bg-[#FFA6F6] active:shadow-[2px_2px_0px_rgba(0,0,0,1)]"
+          onSubmit={handleSearchSubmit}
+          placeholder="Search Anime Ongoing"
+          value={searchTerm}
+          onChange={handleSearch}
+        />
+      </div> */}
+
+      <button className="h-12 border-black border-2 p-2 mt-4 flex justify-start sticky top-24 mt-4 bg-yellow-200 hover:bg-yellow-300 text-slate-950 hover:shadow-[4px_4px_0px_rgba(0,0,0,2)] active:bg-yellow-400">
         <Link to="/">back</Link>
       </button>
 
@@ -150,12 +160,14 @@ const DetailAnime = () => {
           </div>
 
           <div className="m-6 mt-8 text-slate-950 border-black border-2 shadow-[8px_8px_0px_rgba(0,0,0,1)] bg-[#F2F7F5]">
+            {detailAnime.trailer.embed_url && (
+              <p className="text-2xl font-bold p-3">Trailer</p>
+            )}
             <div className="w-full h-full"> 
               <Iframe
                 url={detailAnime.trailer.embed_url + "?controls=1&autohide=1&showinfo=0"} 
                 width="100%"
                 height="100%"
-                
                 alt={detailAnime.title}
               />
             </div>

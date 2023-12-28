@@ -14,7 +14,7 @@ const Complete = () => {
   const [open, setOpen] = useState(false);
 
   const getData = async () => {
-    const res = await fetch(`https://api.jikan.moe/v4/anime?status=complete&page=${currentPage}&q=${searchTerm}`);
+    const res = await fetch(`https://api.jikan.moe/v4/anime?sfw&status=complete&page=${currentPage}&q=${searchTerm}`);
     
     const data = await res.json();
     setAnimeData(data.data);
