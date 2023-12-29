@@ -5,6 +5,8 @@ const Layout = () => {
   const {pathname} = useLocation();
   // console.log(pathname);
 
+  const id = pathname.split("/")[2];
+
   return (
     <>
       {/* <h1 className="text-6xl mb-4 font-public-sans font-semibold text-slate-950"><Link to="/">- Anymelist -</Link>  </h1> */}
@@ -13,7 +15,7 @@ const Layout = () => {
 
       <div className="space-x-4">
       
-        <button className={`h-12 border-black border-2 p-2.5 bg-[#A6FAFF] text-slate-950 ${pathname === "/" || pathname === "/Complete" || pathname === "/Ongoing" || pathname === "/Upcoming" || pathname === "/DetailAnime" ? "bg-[#79F7FF] shadow-[4px_4px_0px_rgba(0,0,0,2)] font-semibold" : ""} `}>
+        <button className={`h-12 border-black border-2 p-2.5 bg-[#A6FAFF] text-slate-950 ${pathname === "/" || pathname === "/Complete" || pathname === "/Ongoing" || pathname === "/Upcoming" || pathname === "/DetailAnime/" + id ? "bg-[#79F7FF] shadow-[4px_4px_0px_rgba(0,0,0,2)] font-semibold" : ""} `}>
             <Link to="/">Anime</Link>
         </button>
 
@@ -25,7 +27,7 @@ const Layout = () => {
             <Link to="/Recommendations">Recommendations</Link>
         </button> */}
 
-        <button className={`h-12 border-black border-2 p-2.5 bg-[#A6FAFF] text-slate-950 ${pathname === "/Manga" || pathname === "/Manga/Complete" || pathname === "/Manga/Publishing" || pathname === "/Manga/Hiatus"  || pathname === "/Manga/Discontinued" ? "bg-[#79F7FF] shadow-[4px_4px_0px_rgba(0,0,0,2)] font-semibold" : ""} `}>
+        <button className={`h-12 border-black border-2 p-2.5 bg-[#A6FAFF] text-slate-950 ${pathname === "/Manga" || pathname === "/Detail/" + id  || pathname === "/Manga/Complete" || pathname === "/Manga/Publishing" || pathname === "/Manga/Hiatus"  || pathname === "/Manga/Discontinued" ? "bg-[#79F7FF] shadow-[4px_4px_0px_rgba(0,0,0,2)] font-semibold" : ""} `}>
             <Link to="/Manga">Manga</Link>
         </button>
       
