@@ -10,7 +10,7 @@ const DetailAnime = () => {
 
     const getData = async () => {
       try {
-        const res = await fetch(`https://api.jikan.moe/v4/anime/${animeId}`);
+        const res = await fetch(`https://api.jikan.moe/v4/anime/${animeId}/full`);
         const data = await res.json();
         setDetailAnime(data.data);
 
@@ -57,7 +57,7 @@ useEffect(() => {
         />
       </div> */}
 
-      <button className="h-12 border-black border-2 p-2 mt-4 flex justify-start sticky top-24 mt-4 bg-yellow-200 hover:bg-yellow-300 text-slate-950 hover:shadow-[4px_4px_0px_rgba(0,0,0,2)] active:bg-yellow-400">
+      <button className="h-12 border-black border-2 p-2 flex justify-start sticky top-24 mt-4 bg-yellow-200 hover:bg-yellow-300 text-slate-950 hover:shadow-[4px_4px_0px_rgba(0,0,0,2)] active:bg-yellow-400">
         <Link to="/">back</Link>
       </button>
 
@@ -71,7 +71,7 @@ useEffect(() => {
             />
             <div className="px-6 py-5 text-left h-full">
               <div className="flex gap-4">
-                <h1 className="text-[32px] mb-2">{detailAnime.title}</h1>
+                <h1 className="text-[32px] mb-2 font-public-sans font-semibold text-slate-950">{detailAnime.title}</h1>
                 <strong className="flex items-center mb-2 gap-2">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -128,11 +128,34 @@ useEffect(() => {
                 <p>
                   <strong>{detailAnime.duration}</strong>
                 </p>
+                <span>|</span>
+                <p>
+                  <strong>{detailAnime.episodes} Ep</strong>
+                </p>
               </div>
+              
             </div>
+
+            
           </article>
 
-          
+          <div className="m-6 mt-8 text-slate-950 border-black border-2 shadow-[8px_8px_0px_rgba(0,0,0,1)] bg-[#F2F7F5]">
+            {detailAnime.trailer.embed_url && (
+              <p className="text-2xl font-public-sans font-semibold text-slate-950 p-3">Trailer</p>
+            )}
+             <div className="flex justify-center">
+               <iframe
+                 src={detailAnime.trailer.embed_url}
+                 title="YouTube video player"
+                 height="520"
+                 width={"100%"}
+                //  className="w-full"
+                 allow="clipboard-write; encrypted-media; gyroscope; picture-in-picture allowfullscreen; autoplay=1;"
+                 frameBorder="0"
+                 allowFullScreen
+               ></iframe>
+             </div>  
+          </div>          
 
           <p className="text-2xl mt-6 font-public-sans font-semibold text-slate-950">
            Character
@@ -148,7 +171,7 @@ useEffect(() => {
                     </h1>
                     <div className="flex mx-auto justify-center">
                       <img
-                        className="w-24 object-contain"
+                        className="object-contain"
                         src={character.character.images.jpg.image_url}
                         alt={character.name}
                       />
@@ -159,19 +182,7 @@ useEffect(() => {
             ))}
           </div>
 
-          <div className="m-6 mt-8 text-slate-950 border-black border-2 shadow-[8px_8px_0px_rgba(0,0,0,1)] bg-[#F2F7F5]">
-            {detailAnime.trailer.embed_url && (
-              <p className="text-2xl font-bold p-3">Trailer</p>
-            )}
-            <div className="w-full h-full"> 
-              <Iframe
-                url={detailAnime.trailer.embed_url + "?controls=1&autohide=1&showinfo=0"} 
-                width="100%"
-                height="100%"
-                alt={detailAnime.title}
-              />
-            </div>
-          </div>
+          
 
         </div>
       )}
