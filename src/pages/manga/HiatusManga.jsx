@@ -13,7 +13,7 @@ const HiatusManga = () => {
 
   const getData = async () => {
     try {
-      const res = await fetch(`https://api.jikan.moe/v4/manga?status=hiatus&page=${currentPage}&q=${searchTerm}`);
+      const res = await fetch(`https://api.jikan.moe/v4/manga?sfw&status=hiatus&page=${currentPage}&q=${searchTerm}`);
       const data = await res.json();
       setAnimeData(data.data);
       setTotalPages(data.pagination.last_visible_page);

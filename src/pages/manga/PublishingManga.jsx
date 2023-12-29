@@ -14,7 +14,7 @@ const PublishingManga = () => {
 
   const getData = async () => {
     try {
-      const res = await fetch(`https://api.jikan.moe/v4/manga?status=publishing&page=${currentPage}&q=${searchTerm}`);
+      const res = await fetch(`https://api.jikan.moe/v4/manga?sfw&status=publishing&page=${currentPage}&q=${searchTerm}`);
       const data = await res.json();
       setAnimeData(data.data);
       setTotalPages(data.pagination.last_visible_page);
