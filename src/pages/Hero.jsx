@@ -6,9 +6,9 @@ const Hero = () => {
         <article className="w-full h-full flex relative">
           <p
             className="text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
-            font-bold text-5xl drop-shadow-[0_3.0px_3.2px_rgba(0,0,0,1)]"
+            font-bold text-6xl drop-shadow-[0_3.0px_3.2px_rgba(0,0,0,1)]"
           >
-            - Anymelist -{" "}
+            Anymelist {" "}
           </p>
           <figure className="w-full h-60 border-black border-b-2">
             <img

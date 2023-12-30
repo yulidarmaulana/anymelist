@@ -206,7 +206,7 @@ const Anime = () => {
           <Link key={anime.mal_id} to={`/DetailAnime/${anime.mal_id}`}>
             <div
               key={anime.mal_id}
-              className="mt-8 text-slate-950 border-black border-4 hover:shadow-[8px_8px_0px_rgba(0,0,0,1)] bg-[#F2F7F5]"
+              className="mt-8 text-slate-950 border-black border-4 hover:shadow-[8px_8px_0px_rgba(0,0,0,1)] hover:font-bold bg-[#F2F7F5]"
             >
               <a href="" className="block cursor-pointer">
                 <article className="w-full h-full">

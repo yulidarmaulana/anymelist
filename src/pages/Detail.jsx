@@ -4,6 +4,7 @@ import { useParams, Link } from "react-router-dom";
 const Detail = () => {
   const [detailManga, setdetailManga] = useState();
   const [recommendations, setRecommendations] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const mangaId = useParams().mal_id;
 
   const getData = async () => {
@@ -64,9 +65,9 @@ const Detail = () => {
               alt={detailManga.title}
               className="h-72 object-contain border-black border-2"
             />
-            <div className="px-6 py-5 text-left h-full">
+            <div className="px-6 text-left h-full">
               <p className="text-base mb-4">{detailManga.release_date}</p>
-              <h1 className="text-[32px]">{detailManga.title}</h1>
+              <h1 className="text-[32px] font-public-sans font-semibold">{detailManga.title}</h1>
               <p className="text-xs">
                 Author : <strong>{detailManga.authors[0].name}</strong>
               </p>
@@ -122,7 +123,7 @@ const Detail = () => {
                   />
                 </figure>
                 <div className="px-6 py-5 text-left h-fit">
-                  <h1 className="text-xl mb-4 truncate">
+                  <h1 className="text-xl truncate">
                     {" "}
                     {recommendation.entry.title}{" "}
                   </h1>

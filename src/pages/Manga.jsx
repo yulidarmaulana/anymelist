@@ -15,7 +15,7 @@ const Manga = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const getData = async () => {
     try {
-      const res = await fetch(`https://api.jikan.moe/v4/top/manga?sfw&page=${currentPage}&q=${searchTerm}`);
+      const res = await fetch(`https://api.jikan.moe/v4/manga?sfw&page=${currentPage}&q=${searchTerm}`);
       const data = await res.json();
       setAnimeData(data.data);
       setTotalPages(data.pagination.last_visible_page);
@@ -226,7 +226,7 @@ const Manga = () => {
           <Link key={manga.mal_id} to={`/Detail/${manga.mal_id}`}>
             <div
               key={manga.mal_id}
-              className="mt-8 text-slate-950 border-black border-4 hover:shadow-[8px_8px_0px_rgba(0,0,0,1)] bg-[#F2F7F5]"
+              className="mt-8 text-slate-950 border-black border-4 hover:shadow-[8px_8px_0px_rgba(0,0,0,1)] hover:font-bold bg-[#F2F7F5]"
             >
               <a href="" className="block cursor-pointer">
                 <article className="w-full h-full">
@@ -238,7 +238,7 @@ const Manga = () => {
                     />
                   </figure>
                   <div className="px-6 py-5 text-left h-full">
-                    <h1 className="text-xl mb-4 truncate"> {manga.title} </h1>
+                    <h1 className="text-xl mb-2 truncate"> {manga.title} </h1>
                     <p className="text-base"> {manga.authors[0].name} </p>
                     {/* <strong>{anime.author}</strong> */}
                   </div>
@@ -248,9 +248,7 @@ const Manga = () => {
           </Link>
         ))}
         <Outlet />
-      </div>
-
-     
+      </div>     
 
       <div className="flex justify-center items-baseline space-x-4 p-4 border-black border-2 bg-[#FFBDC4] shadow-[4px_4px_0px_rgba(0,0,0,1)]">
 
