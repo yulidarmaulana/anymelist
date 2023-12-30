@@ -150,7 +150,7 @@ useEffect(() => {
                  height="520"
                  width={"100%"}
                 //  className="w-full"
-                 allow="clipboard-write; encrypted-media; gyroscope; picture-in-picture allowfullscreen; autoplay=1;"
+                 allow="clipboard-write autoplay=1 ; encrypted-media; gyroscope; picture-in-picture allowfullscreen;"
                  frameBorder="0"
                  allowFullScreen
                ></iframe>
