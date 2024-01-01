@@ -4,7 +4,7 @@ import classNames from "classnames";
 
 
 const Complete = () => {
-    const [animeData, setAnimeData] = useState();
+  const [animeData, setAnimeData] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
@@ -169,22 +169,14 @@ const Complete = () => {
               <form method="POST" action="#" role="none">
                 <Link to="/">
                   <button
-                    // type="submit"
                     className="block w-full border-black border-b-2 px-4 py-2 text-left text-sm hover:bg-[#B8FF9F] hover:font-medium"
-                    // role="menuitem"
-                    // tabindex="-1"
-                    // id="menu-item-3"
                   >
                     All
                   </button>
                 </Link>
                 <Link to="/Upcoming">
                   <button
-                    // type="submit"
                     className="block w-full border-black border-b-2 px-4 py-2 text-left text-sm hover:bg-[#B8FF9F] hover:font-medium"
-                    // role="menuitem"
-                    // tabindex="-1"
-                    // id="menu-item-3"
                   >
                     Upcoming
                   </button>
@@ -304,7 +296,7 @@ const Complete = () => {
         </button>
       </div>
 
-      <p className="text-slate-950 mt-4 ">
+      <p className="text-slate-50 mt-4 ">
         Designed and developed by{" "}
         <a
           href="https://github.com/yulidarmaulana"

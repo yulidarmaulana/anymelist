@@ -4,7 +4,7 @@ import { useParams, Link } from "react-router-dom";
 const Detail = () => {
   const [detailManga, setdetailManga] = useState();
   const [recommendations, setRecommendations] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  // const [searchTerm, setSearchTerm] = useState("");
   const mangaId = useParams().mal_id;
 
   const getData = async () => {
@@ -98,7 +98,7 @@ const Detail = () => {
 
       <div className="">
         {recommendations.length > 0 && (
-          <p className="text-2xl mt-6 font-public-sans font-semibold text-slate-950">
+          <p className="text-2xl mt-6 font-public-sans font-semibold text-slate-50">
             Recommendation
           </p>
         )}
@@ -134,7 +134,7 @@ const Detail = () => {
         ))}
       </div>
 
-      <p className="text-slate-950 mt-4 ">
+      <p className="text-slate-50 mt-4 ">
         Designed and developed by{" "}
         <a
           href="https://github.com/yulidarmaulana"

@@ -23,21 +23,23 @@ function App() {
       <Routes>
         <Route path="/" element={<Hero />}>
           <Route path="/" element={<Layout />}>
-            <Route index element={<Anime />} />
-            <Route path="Complete" element={<Complete />} />
-            <Route path="Upcoming" element={<Upcoming />} />
-            <Route path="Ongoing" element={<Ongoing />} />
-            <Route path="*" element={<NoPage />} />
-            <Route path="Manga" element={<Manga />} />
-            <Route path="Manga/Complete" element={<CompleteManga />} />
-            <Route path="Manga/Publishing" element={<PublishingManga />} />
-            <Route path="Manga/Hiatus" element={<HiatusManga />} />
-            <Route path="Manga/Discontinued" element={<DiscontinuedManga />} />
-          <Route path="/Detail/:mal_id" element={<Detail />} />
-          <Route path="/DetailAnime/:mal_id" element={<DetailAnime />} />
-          </Route>
+              
+              <Route index element={<Anime />} />
+              <Route path="Complete" element={<Complete />} />
+              <Route path="Upcoming" element={<Upcoming />} />
+              <Route path="Ongoing" element={<Ongoing />} />
+              
+              <Route path="*" element={<NoPage />} />
 
-        
+              <Route path="Manga" element={<Manga />} />
+              <Route path="Manga/Complete" element={<CompleteManga />} />
+              <Route path="Manga/Publishing" element={<PublishingManga />} />
+              <Route path="Manga/Hiatus" element={<HiatusManga />} />
+              <Route path="Manga/Discontinued" element={<DiscontinuedManga />} />
+              <Route path="/Detail/:mal_id" element={<Detail />} />
+              <Route path="/DetailAnime/:mal_id" element={<DetailAnime />} />
+
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>

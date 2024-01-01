@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 import { useParams , Link} from "react-router-dom";
-import Iframe from 'react-iframe'
+// import Iframe from 'react-iframe'
 
 const DetailAnime = () => {
     const [detailAnime, setDetailAnime] = useState();
@@ -150,11 +150,7 @@ useEffect(() => {
                  height="520"
                  width={"100%"}
                 //  className="w-full"
-<<<<<<< HEAD
                  allow="clipboard-write autoplay=1 ; encrypted-media; gyroscope; picture-in-picture allowfullscreen;"
-=======
-                 allow="clipboard-write; encrypted-media; gyroscope; picture-in-picture allowfullscreen; autoplay=1;"
->>>>>>> 759bb3677c6d8673f821046c984617d39878703a
                  frameBorder="0"
                  allowFullScreen
                ></iframe>
@@ -186,14 +182,12 @@ useEffect(() => {
             ))}
           </div>
 
-          
-
         </div>
       )}
 
       <div className="">
         {recommendations.length > 0 && (
-                <p className="text-2xl mt-6 font-public-sans font-semibold text-slate-950">
+                <p className="text-2xl mt-6 font-public-sans font-semibold text-slate-50">
                 Recommendation
               </p>
         )}
@@ -230,7 +224,7 @@ useEffect(() => {
         ))}
       </div>
 
-      <p className="text-slate-950 mt-4 ">
+      <p className="text-slate-50 mt-4 ">
         Designed and developed by{" "}
         <a
           href="https://github.com/yulidarmaulana"

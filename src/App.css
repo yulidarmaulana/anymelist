@@ -6,7 +6,8 @@
   padding: 2rem;
   text-align: center;
   font-family: 'Public Sans', sans-serif;
-
+  background-color: #1F4290;
+  min-height: 100vh;
 }
 
 .logo {

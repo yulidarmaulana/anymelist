@@ -311,7 +311,7 @@ const Ongoing = () => {
         </button>
       </div>
 
-      <p className="text-slate-950 mt-4 ">
+      <p className="text-slate-50 mt-4 ">
         Designed and developed by{" "}
         <a
           href="https://github.com/yulidarmaulana"

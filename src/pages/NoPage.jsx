@@ -5,7 +5,7 @@ const NoPage = () => {
 
   return (
     <>
-      <di className="text-4xl font-bold text-slate-950 justify-center">
+      <di className="text-4xl font-bold text-slate-50 justify-center">
         <h1 className="mt-56 "> - Not Found - </h1>
       </di>;
     </>
