@@ -12,7 +12,7 @@ const Hero = () => {
           </p>
           <figure className="w-full h-60 border-black border-b-2">
             <img
-              src={"https://w.wallhaven.cc/full/85/wallhaven-8582wj.jpg"}
+              src={"/src/assets/hero.jpg"}
               //    src={"https://cdn.dribbble.com/userupload/9856929/file/original-79e0bbf436f9e487b674362b8f96eeb9.png?resize=1024x1024"}
               alt="thumbnail"
               className="w-full h-full object-cover"
